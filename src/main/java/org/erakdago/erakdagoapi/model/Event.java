@@ -1,6 +1,7 @@
 package org.erakdago.erakdagoapi.model;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -8,12 +9,6 @@ import java.util.UUID;
 
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-@EqualsAndHashCode
-@ToString
-
 public class Event {
     private UUID id;
     private String name;
