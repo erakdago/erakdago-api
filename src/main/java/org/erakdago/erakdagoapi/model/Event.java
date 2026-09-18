@@ -20,4 +20,5 @@ public class Event {
     private String location;
     private List<Activity> activities;
     private UUID townID; // FK -> towns.id
+    private List<Review> reviewsHistory;
 }

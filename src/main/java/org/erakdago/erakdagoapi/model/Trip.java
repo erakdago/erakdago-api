@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -18,5 +19,5 @@ public class Trip {
     private LocalDateTime createdAt;
     private Traveler traveler;
     private Destination destination;
-
+    private List<Steps> steps;
 }
