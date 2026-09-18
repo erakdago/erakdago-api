@@ -3,6 +3,7 @@ package org.erakdago.erakdagoapi.model;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -18,4 +19,5 @@ public abstract class Service {
     private boolean availability;
     private String status;
     private UUID towndID; // FK -> towns.id
+    private List<Review> reviewHistory;
 }

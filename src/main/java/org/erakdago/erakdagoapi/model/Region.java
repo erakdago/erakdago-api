@@ -4,17 +4,15 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
 @Getter
 @Setter
-public class Town {
+public class Region {
     private UUID id;
     private String name;
     private String description;
-    private List<String> images;
-    private Set<Activity> activities;
-    private List<Review> reviews;
-    private List<CulturalElement> culturalElements;
+    private String climate;
+    private String image;
+    private List<Challenge> challengesAvailable;
 }

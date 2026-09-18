@@ -4,17 +4,17 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
 @Getter
 @Setter
-public class Town {
+public class CulturalElement {
     private UUID id;
     private String name;
     private String description;
+    private String type;
+    private String historicalPeriode;
+    private String cultuiuralSignificance;
     private List<String> images;
-    private Set<Activity> activities;
-    private List<Review> reviews;
-    private List<CulturalElement> culturalElements;
+    private UUID town; // FK -> Town.id
 }
