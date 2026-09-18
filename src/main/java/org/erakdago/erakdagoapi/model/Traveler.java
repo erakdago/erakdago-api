@@ -19,4 +19,5 @@ public class Traveler extends User {
     private String localisation;
     private List<Reservation> reservationHistory;
     private List<Trip> trips = new ArrayList<>();
+    private List<Review> reviewsLeft;
 }

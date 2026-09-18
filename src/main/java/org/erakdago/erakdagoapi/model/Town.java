@@ -17,4 +17,6 @@ public class Town {
     private String description;
     private List<String> images;
     private Set<Activity> activities;
+    private List<Review> reviews;
+    private List<CulturalElement> culturalElements;
 }
