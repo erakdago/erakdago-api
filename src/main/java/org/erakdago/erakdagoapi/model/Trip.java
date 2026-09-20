@@ -12,6 +12,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+
 public class Trip {
     private UUID id;
     private String name;
@@ -23,5 +24,4 @@ public class Trip {
     private Traveler traveler;
     private Destination destination;
     private List<Steps> steps;
-
 }
