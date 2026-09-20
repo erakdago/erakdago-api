@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.Duration;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -26,6 +27,5 @@ public class Activity {
     private int price;
     private boolean availability;
     private String image;
-
+    private List<EndemicSpecies> endemicSpecies;
 }
-

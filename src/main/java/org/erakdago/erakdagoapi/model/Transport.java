@@ -1,13 +1,13 @@
 package org.erakdago.erakdagoapi.model;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@Getter
-@Setter
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Transport {
     private UUID id;
     private String name;
@@ -18,5 +18,5 @@ public class Transport {
     private LocalDateTime departureTime;
     private LocalDateTime arrivalTime;
     private Double cost;
-    private String Duration;
+    private String duration;
 }
