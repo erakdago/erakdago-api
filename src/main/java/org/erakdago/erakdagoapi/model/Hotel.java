@@ -1,15 +1,13 @@
 package org.erakdago.erakdagoapi.model;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-@Getter
-@Setter
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Hotel extends Service{
     private int numberOfRooms;
     private String roomType;
     private int starRating;
     private String amenities;
-    private int maxPrice;
-    private int minPrice;
 }

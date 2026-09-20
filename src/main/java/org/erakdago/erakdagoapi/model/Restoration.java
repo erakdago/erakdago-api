@@ -1,12 +1,14 @@
 package org.erakdago.erakdagoapi.model;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalTime;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString(callSuper = true)
 public class Restoration extends Service {
     private String cuisineType;
     private LocalTime openingHours;

@@ -1,16 +1,16 @@
 package org.erakdago.erakdagoapi.model;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Date;
 import java.util.UUID;
 
-@Getter
-@Setter
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Review {
     private UUID id;
-    public UUID authorId; // FK -> Traveler.id
+    private UUID authorId; // FK -> Traveler.id
     private double rating;
     private String comment;
     private Date createdAt;
@@ -20,5 +20,5 @@ public class Review {
     private UUID eventId;
     private UUID activityId;
     private UUID townId;
-    private UUID serviceID; // only one among the 4
+    private UUID serviceId; // only one among the 4
 }

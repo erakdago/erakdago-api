@@ -1,14 +1,14 @@
 package org.erakdago.erakdagoapi.model;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
-@Getter
-@Setter
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Event {
     private UUID id;
     private String name;
@@ -19,6 +19,6 @@ public class Event {
     private boolean status;
     private String location;
     private List<Activity> activities;
-    private UUID townID; // FK -> towns.id
+    private UUID townId; // FK -> Town.id
     private List<Review> reviewsHistory;
 }
