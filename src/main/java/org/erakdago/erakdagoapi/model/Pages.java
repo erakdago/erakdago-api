@@ -1,20 +1,21 @@
 package org.erakdago.erakdagoapi.model;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Destination {
+public class Pages {
     private UUID id;
-    private String name;
-    private String description;
-    private String image;
-    private LocalTime bestTimeToVisit;
-    private UUID tripId; // FK -> Trip.id
+    private String order;
+    private String title;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+    private UUID diaryId;
 }

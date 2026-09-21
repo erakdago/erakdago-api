@@ -4,17 +4,20 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalTime;
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
+
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Destination {
+public class Diary {
     private UUID id;
-    private String name;
+    private String title;
     private String description;
-    private String image;
-    private LocalTime bestTimeToVisit;
-    private UUID tripId; // FK -> Trip.id
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+    private List<Pages>  pages;
+    private UUID tripId;
 }
