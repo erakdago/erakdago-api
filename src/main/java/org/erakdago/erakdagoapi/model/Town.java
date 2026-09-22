@@ -20,6 +20,6 @@ public class Town {
     private List<Review> reviews;
     private List<CulturalElement> culturalElements;
     private UUID regionId; // FK -> Region.id
-    private List<EndemicSpecies> endemicSpecies;
+    private List<Species> endemicSpecies;
     private List<Service> services;
 }
