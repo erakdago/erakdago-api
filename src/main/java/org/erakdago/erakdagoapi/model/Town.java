@@ -22,4 +22,5 @@ public class Town {
     private UUID regionId; // FK -> Region.id
     private List<Species> endemicSpecies;
     private List<Service> services;
+    private List<Dish> dishes;
 }

@@ -20,5 +20,8 @@ public class Media {
     private UUID id;
     private String title;
     private MediaType type;
+    private String url;
+    private String description;
     private LocalDate createdAt;
+    private String content;
 }

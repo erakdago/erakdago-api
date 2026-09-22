@@ -15,6 +15,7 @@ public class CulturalElement {
     private String type;
     private String historicalPeriod;
     private String culturalSignificance;
+    private String image;
     private List<String> images;
     private UUID town; // FK -> Town.id
 }
