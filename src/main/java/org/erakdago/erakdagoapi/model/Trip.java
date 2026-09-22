@@ -24,4 +24,6 @@ public class Trip {
     private Traveler traveler;
     private Destination destination;
     private List<Steps> steps;
+    private List<TripInvitation> tripInvitations;
+    private List<TripProposal> tripProposals;
 }

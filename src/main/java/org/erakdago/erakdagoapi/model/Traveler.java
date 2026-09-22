@@ -20,4 +20,7 @@ public class Traveler extends User {
     private List<Post> posts;
     private List<Comment> comments;
     private List<Like> likes;
+    private List<TripInvitation> tripInvitations;
+    private List<TripProposal> tripProposals;
+    private List<CheckIn> checkIns;
 }
