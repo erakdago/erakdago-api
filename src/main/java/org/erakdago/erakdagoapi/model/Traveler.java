@@ -16,5 +16,5 @@ public class Traveler extends User {
     private List<Reservation> reservationHistory;
     private List<Trip> trips = new ArrayList<>();
     private List<Review> reviewsLeft;
-    private List<Favorite> favoriteTownd;
+    private List<Favorite> favoriteTowns;
 }

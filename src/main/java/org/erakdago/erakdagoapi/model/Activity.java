@@ -13,8 +13,8 @@ import java.util.UUID;
 @AllArgsConstructor
 public class Activity {
 
-    public enum ActivityDifficulty{
-        EASY,MEDIUM,DIFFICULTY
+    public enum ActivityDifficulty {
+        EASY, MEDIUM, DIFFICULT
     }
 
     private UUID id;
@@ -27,5 +27,5 @@ public class Activity {
     private int price;
     private boolean availability;
     private String image;
-    private List<EndemicSpecies> endemicSpecies;
+    private List<Species> endemicSpecies;
 }

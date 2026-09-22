@@ -22,7 +22,7 @@ public class Species {
     private List<String> images;
     private boolean isEndemic;
     private SpeciesType type;
-    private UUID towndID;
+    private UUID townId;
     public enum ConservationStatus {
         CR, EN, VU, NT, LC, DD, NE
     }
