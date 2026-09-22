@@ -17,4 +17,7 @@ public class Traveler extends User {
     private List<Trip> trips = new ArrayList<>();
     private List<Review> reviewsLeft;
     private List<Favorite> favoriteTowns;
+    private List<Post> posts;
+    private List<Comment> comments;
+    private List<Like> likes;
 }
