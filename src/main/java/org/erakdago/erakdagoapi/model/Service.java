@@ -9,8 +9,7 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
-@EqualsAndHashCode
+@ToString(callSuper = true)
 public abstract class Service {
     private UUID id;
     private String name;

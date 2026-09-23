@@ -1,10 +1,6 @@
 package org.erakdago.erakdagoapi.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,4 +16,11 @@ public class Traveler extends User {
     private List<Reservation> reservationHistory;
     private List<Trip> trips = new ArrayList<>();
     private List<Review> reviewsLeft;
+    private List<Favorite> favoriteTowns;
+    private List<Post> posts;
+    private List<Comment> comments;
+    private List<Like> likes;
+    private List<TripInvitation> tripInvitations;
+    private List<TripProposal> tripProposals;
+    private List<CheckIn> checkIns;
 }
