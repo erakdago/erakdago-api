@@ -14,6 +14,7 @@ import java.util.UUID;
 public class Activity {
 
     public enum ActivityDifficulty {
+
         EASY, MEDIUM, DIFFICULT
     }
 
@@ -28,4 +29,5 @@ public class Activity {
     private boolean availability;
     private String image;
     private List<Species> endemicSpecies;
+
 }
