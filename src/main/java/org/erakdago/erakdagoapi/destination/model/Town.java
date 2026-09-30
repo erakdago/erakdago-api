@@ -1,0 +1,29 @@
+package org.erakdago.erakdagoapi.destination.model;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import org.erakdago.erakdagoapi.activity.model.Activity;
+import org.erakdago.erakdagoapi.social.model.Review;
+
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Town {
+    private UUID id;
+    private String name;
+    private String description;
+    private List<String> images;
+    private Set<Activity> activities;
+    private List<Review> reviews;
+    private List<CulturalElement> culturalElements;
+    private UUID regionId; // FK -> Region.id
+    private List<Species> endemicSpecies;
+    private List<Service> services;
+    private List<Dish> dishes;
+}
