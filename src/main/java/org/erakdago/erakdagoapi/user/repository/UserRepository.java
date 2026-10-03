@@ -31,7 +31,7 @@ public class UserRepository {
         );
     }
 
-    public Optional<UserResponse> findById(UUID id) {
+    public Optional<UserResponse> findUserById(UUID id) {
         String findByIdQuery = "SELECT * FROM users WHERE id = ?";
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(findByIdQuery)

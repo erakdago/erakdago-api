@@ -16,7 +16,7 @@ public class UserService {
     private final UserRepository userRepository;
 
     public UserResponse getUserById(UUID id) {
-        return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
+        return userRepository.findUserById(id).orElseThrow(() -> new UserNotFoundException(id));
     }
 
     public List<UserResponse> getUsers() throws SQLException {
