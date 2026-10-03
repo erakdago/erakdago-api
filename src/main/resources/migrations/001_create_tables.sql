@@ -5,7 +5,7 @@ CREATE EXTENSION IF NOT EXISTS pgcrypto;
 -- ============ Users hierarchy (User -> Admin / Professional / Traveler) ============
 
 CREATE TABLE users (
-    id                UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    id                UUID PRIMARY KEY NOT NULL DEFAULT gen_random_uuid(),
     first_name        TEXT,
     last_name         TEXT,
     username          TEXT NOT NULL,
@@ -14,8 +14,8 @@ CREATE TABLE users (
     password          TEXT NOT NULL,
     pfp               TEXT,
     about             TEXT,
-    registration_date TIMESTAMP,
-    status            TEXT,
+    registration_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    status            TEXT NOT NULL DEFAULT 'ACTIVE',
     CONSTRAINT uq_users_username UNIQUE (username),
     CONSTRAINT uq_users_email    UNIQUE (email)
 );
