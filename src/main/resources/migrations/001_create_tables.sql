@@ -14,8 +14,8 @@ CREATE TABLE users (
     password          TEXT NOT NULL,
     pfp               TEXT,
     about             TEXT,
-    registration_date TIMESTAMP,
-    status            TEXT,
+    registration_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    status            TEXT NOT NULL DEFAULT 'ACTIVE',
     CONSTRAINT uq_users_username UNIQUE (username),
     CONSTRAINT uq_users_email    UNIQUE (email)
 );
