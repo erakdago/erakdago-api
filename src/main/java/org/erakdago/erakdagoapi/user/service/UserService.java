@@ -6,6 +6,8 @@ import org.erakdago.erakdagoapi.user.dto.UserResponse;
 import org.erakdago.erakdagoapi.user.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLException;
+import java.util.List;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -15,5 +17,9 @@ public class UserService {
 
     public UserResponse getUserById(UUID id) {
         return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
+    }
+
+    public List<UserResponse> getUsers() throws SQLException {
+        return userRepository.findUsers();
     }
 }
