@@ -36,4 +36,11 @@ public class UserService {
                 user.getStatus()
         );
     }
+
+    public void deleteUser(UUID id) {
+        boolean deleted = userRepository.deleteUser(id);
+        if (!deleted) {
+            throw new UserNotFoundException(id);
+        }
+    }
 }
