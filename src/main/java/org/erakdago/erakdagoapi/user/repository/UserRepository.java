@@ -102,4 +102,16 @@ public class UserRepository {
         }
         return null;
     }
+
+    public boolean deleteUser(UUID id) {
+        String deleteUserQuery = "DELETE FROM users WHERE id = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(deleteUserQuery)
+        ) {
+            ps.setString(1, id.toString());
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            throw new DatabaseException("Error encountered while trying to delete user: " + id, e);
+        }
+    }
 }
