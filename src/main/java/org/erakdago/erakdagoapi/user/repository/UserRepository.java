@@ -2,7 +2,9 @@ package org.erakdago.erakdagoapi.user.repository;
 
 import org.erakdago.erakdagoapi.config.DatabaseConnection;
 import org.erakdago.erakdagoapi.exception.DatabaseException;
+import org.erakdago.erakdagoapi.user.dto.CreateUserDTO;
 import org.erakdago.erakdagoapi.user.dto.UserResponse;
+import org.erakdago.erakdagoapi.user.model.User;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
@@ -45,7 +47,7 @@ public class UserRepository {
         }
     }
 
-    public List<UserResponse> findUsers() throws SQLException {
+    public List<UserResponse> findUsers() {
         String findQuery = "SELECT * FROM users";
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(findQuery)
@@ -60,5 +62,44 @@ public class UserRepository {
         } catch (SQLException e) {
             throw new DatabaseException("Error encountered while trying to find users", e);
         }
+    }
+
+    public User createUser(CreateUserDTO createUserDTO) {
+        String createUserQuery = "INSERT INTO users(first_name,last_name,username,phone_number,email,password,pfp,about)" +
+                " VALUES (?,?,?,?,?,?,?,?)" +
+                " RETURNING *";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(createUserQuery)
+        ) {
+            ps.setString(1, createUserDTO.firstName());
+            ps.setString(2, createUserDTO.lastName());
+            ps.setString(3, createUserDTO.username());
+            ps.setString(4, createUserDTO.phoneNumber());
+            ps.setString(5, createUserDTO.email());
+            ps.setString(6, createUserDTO.password());
+            ps.setString(7, createUserDTO.pfp());
+            ps.setString(8, createUserDTO.about());
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return new User(
+                            rs.getObject("id", UUID.class),
+                            rs.getString("first_name"),
+                            rs.getString("last_name"),
+                            rs.getString("username"),
+                            rs.getString("phone_number"),
+                            rs.getString("email"),
+                            rs.getString("password"),
+                            rs.getString("pfp"),
+                            rs.getString("about"),
+                            rs.getTimestamp("registration_date") != null ? rs.getTimestamp("registration_date").toLocalDateTime() : null,
+                            rs.getString("status")
+                    );
+                }
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Error encountered while trying to create user", e);
+        }
+        return null;
     }
 }
