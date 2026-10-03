@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.sql.SQLException;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -19,5 +21,10 @@ public class UserController {
     @GetMapping("/{id}")
     public UserResponse get(@PathVariable UUID id) {
         return userService.getUserById(id);
+    }
+
+    @GetMapping("/")
+    public List<UserResponse> getUsers() throws SQLException {
+        return userService.getUsers();
     }
 }
