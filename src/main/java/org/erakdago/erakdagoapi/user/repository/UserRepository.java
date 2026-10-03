@@ -2,7 +2,9 @@ package org.erakdago.erakdagoapi.user.repository;
 
 import org.erakdago.erakdagoapi.config.DatabaseConnection;
 import org.erakdago.erakdagoapi.exception.DatabaseException;
+import org.erakdago.erakdagoapi.exception.UserNotFoundException;
 import org.erakdago.erakdagoapi.user.dto.CreateUserDTO;
+import org.erakdago.erakdagoapi.user.dto.UpdateUserDTO;
 import org.erakdago.erakdagoapi.user.dto.UserResponse;
 import org.erakdago.erakdagoapi.user.model.User;
 import org.springframework.stereotype.Repository;
@@ -113,5 +115,41 @@ public class UserRepository {
         } catch (SQLException e) {
             throw new DatabaseException("Error encountered while trying to delete user: " + id, e);
         }
+    }
+
+    public UserResponse updateUser(UUID id, UpdateUserDTO updateUserDTO) {
+        String updateUserQuery = """
+                UPDATE users
+                SET first_name = ?,
+                    last_name = ?,
+                    username = ?,
+                    phone_number = ?,
+                    email = ?,
+                    pfp = ?,
+                    about = ?
+                WHERE id = ?
+                RETURNING *
+                """;
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(updateUserQuery)
+        ) {
+            ps.setString(1, updateUserDTO.firstName());
+            ps.setString(2, updateUserDTO.lastName());
+            ps.setString(3, updateUserDTO.username());
+            ps.setString(4, updateUserDTO.phoneNumber());
+            ps.setString(5, updateUserDTO.email());
+            ps.setString(6, updateUserDTO.pfp());
+            ps.setString(7, updateUserDTO.about());
+            ps.setObject(8, id);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return mapRow(rs);
+                }
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Error encountered while trying to update user: " + id, e);
+        }
+        throw new UserNotFoundException(id);
     }
 }

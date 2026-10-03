@@ -3,6 +3,7 @@ package org.erakdago.erakdagoapi.user.service;
 import lombok.RequiredArgsConstructor;
 import org.erakdago.erakdagoapi.exception.UserNotFoundException;
 import org.erakdago.erakdagoapi.user.dto.CreateUserDTO;
+import org.erakdago.erakdagoapi.user.dto.UpdateUserDTO;
 import org.erakdago.erakdagoapi.user.dto.UserResponse;
 import org.erakdago.erakdagoapi.user.model.User;
 import org.erakdago.erakdagoapi.user.repository.UserRepository;
@@ -42,5 +43,9 @@ public class UserService {
         if (!deleted) {
             throw new UserNotFoundException(id);
         }
+    }
+
+    public UserResponse updateUser(UUID id, UpdateUserDTO updateUserDTO) {
+        return userRepository.updateUser(id, updateUserDTO);
     }
 }
