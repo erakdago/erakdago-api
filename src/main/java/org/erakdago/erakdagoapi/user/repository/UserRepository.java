@@ -9,6 +9,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -40,6 +42,23 @@ public class UserRepository {
             }
         } catch (SQLException e) {
             throw new DatabaseException("Error encountered while trying to find user with id " + id, e);
+        }
+    }
+
+    public List<UserResponse> findUsers() throws SQLException {
+        String findQuery = "SELECT * FROM users";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(findQuery)
+        ) {
+            try (ResultSet rs = ps.executeQuery()) {
+                List<UserResponse> users = new ArrayList<>();
+                while (rs.next()) {
+                    users.add(mapRow(rs));
+                }
+                return users;
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Error encountered while trying to find users", e);
         }
     }
 }
