@@ -152,4 +152,29 @@ public class UserRepository {
         }
         throw new UserNotFoundException(id);
     }
+
+    public Optional<String> findPasswordHashById(UUID id) {
+        String findByIdPasswordQuery = """
+                        SELECT password
+                         FROM users
+                          WHERE id = ?
+                """;
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(findByIdPasswordQuery)
+        ) {
+            ps.setObject(1, id);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return Optional.of(rs.getString("password"));
+                }
+                return Optional.empty();
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Error encountered while trying to find password for id: " + id, e);
+        }
+    }
+
+    public 
+
 }
