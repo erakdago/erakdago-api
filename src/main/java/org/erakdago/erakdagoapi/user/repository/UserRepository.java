@@ -49,6 +49,38 @@ public class UserRepository {
         }
     }
 
+    public Optional<User> findUsersByEmail(String email) {
+        String findByEmailQuery = "SELECT * FROM users WHERE email = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(findByEmailQuery)
+        ) {
+            ps.setString(1, email);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return Optional.of(
+                            new User(
+                                    rs.getObject("id", UUID.class),
+                                    rs.getString("first_name"),
+                                    rs.getString("last_name"),
+                                    rs.getString("username"),
+                                    rs.getString("phone_number"),
+                                    rs.getString("email"),
+                                    rs.getString("password"),
+                                    rs.getString("pfp"),
+                                    rs.getString("about"),
+                                    rs.getTimestamp("registration_date")
+                                            .toLocalDateTime(),
+                                    rs.getString("status")
+                            )
+                    );
+                }
+                return Optional.empty();
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Error encountered while trying to find user with email " + email, e);
+        }
+    }
+
     public List<UserResponse> findUsers() {
         String findQuery = "SELECT * FROM users";
         try (Connection conn = DatabaseConnection.getConnection();
