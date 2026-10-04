@@ -175,6 +175,25 @@ public class UserRepository {
         }
     }
 
-    public 
+    public boolean updatePassword(UUID id, String hashedPassword) {
+        String updatePasswordQuery = """
+                    UPDATE users
+                    SET password = ?
+                    WHERE id = ?
+                """;
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(updatePasswordQuery)
+        ) {
+            ps.setString(1, hashedPassword);
+            ps.setObject(2, id);
+
+            return ps.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            throw new DatabaseException("Error encountered while trying to update password for id: " + id, e);
+        }
+    }
+
 
 }
