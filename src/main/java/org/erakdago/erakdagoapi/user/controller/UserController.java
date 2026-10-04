@@ -2,6 +2,7 @@ package org.erakdago.erakdagoapi.user.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.erakdago.erakdagoapi.user.dto.CreateUserDTO;
+import org.erakdago.erakdagoapi.user.dto.UpdatePasswordDTO;
 import org.erakdago.erakdagoapi.user.dto.UpdateUserDTO;
 import org.erakdago.erakdagoapi.user.dto.UserResponse;
 import org.erakdago.erakdagoapi.user.service.UserService;
@@ -34,6 +35,11 @@ public class UserController {
     @PatchMapping("/{id}")
     public UserResponse update(@PathVariable UUID id, @RequestBody UpdateUserDTO updateUserDTO) {
         return userService.updateUser(id, updateUserDTO);
+    }
+
+    @PatchMapping("/{id}/password")
+    public void updatePassword(@PathVariable UUID id, @RequestBody UpdatePasswordDTO updatePasswordDTO) {
+        userService.updatePassword(id, updatePasswordDTO);
     }
 
     @DeleteMapping("/{id}")
