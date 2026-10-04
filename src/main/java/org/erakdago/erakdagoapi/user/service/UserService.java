@@ -7,6 +7,7 @@ import org.erakdago.erakdagoapi.user.dto.UpdateUserDTO;
 import org.erakdago.erakdagoapi.user.dto.UserResponse;
 import org.erakdago.erakdagoapi.user.model.User;
 import org.erakdago.erakdagoapi.user.repository.UserRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,6 +17,7 @@ import java.util.UUID;
 @Service
 public class UserService {
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public UserResponse getUserById(UUID id) {
         return userRepository.findUserById(id).orElseThrow(() -> new UserNotFoundException(id));
@@ -26,7 +28,21 @@ public class UserService {
     }
 
     public UserResponse createUser(CreateUserDTO createUserDTO) {
-        User user = userRepository.createUser(createUserDTO);
+
+        String hashedPassword = passwordEncoder.encode(createUserDTO.password());
+
+        CreateUserDTO userWithHashedPasswordDTO = new CreateUserDTO(
+                createUserDTO.firstName(),
+                createUserDTO.lastName(),
+                createUserDTO.username(),
+                createUserDTO.phoneNumber(),
+                createUserDTO.email(),
+                hashedPassword,
+                createUserDTO.pfp(),
+                createUserDTO.about()
+        );
+
+        User user = userRepository.createUser(userWithHashedPasswordDTO);
         return new UserResponse(
                 user.getId(),
                 user.getFirstName(),
