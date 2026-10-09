@@ -15,7 +15,7 @@ public class Region {
     private String name;
     private String description;
     private String climate;
-    private String image;
+    private List<String> image;
     private List<Challenge> challengesAvailable;
     private List<Town> towns;
 }
