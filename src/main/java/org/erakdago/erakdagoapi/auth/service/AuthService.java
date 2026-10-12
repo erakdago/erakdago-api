@@ -2,43 +2,29 @@ package org.erakdago.erakdagoapi.auth.service;
 
 
 import lombok.RequiredArgsConstructor;
+import org.erakdago.erakdagoapi.auth.dto.AuthResponse;
 import org.erakdago.erakdagoapi.auth.dto.LoginRequest;
-import org.erakdago.erakdagoapi.auth.dto.LoginResponse;
 import org.erakdago.erakdagoapi.auth.dto.RegisterRequest;
-import org.erakdago.erakdagoapi.exception.DatabaseException;
-import org.erakdago.erakdagoapi.exception.UserNotFoundException;
+import org.erakdago.erakdagoapi.security.JwtService;
 import org.erakdago.erakdagoapi.user.dto.CreateUserDTO;
 import org.erakdago.erakdagoapi.user.dto.UserResponse;
 import org.erakdago.erakdagoapi.user.model.User;
 import org.erakdago.erakdagoapi.user.repository.UserRepository;
-import org.erakdago.erakdagoapi.user.service.UserService;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @RequiredArgsConstructor
 @Service
 public class AuthService {
-    private final UserService userService;
-    private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
 
-    public UserResponse register(RegisterRequest registerRequest) {
-        String hashedPassword = passwordEncoder.encode(registerRequest.password());
-
-        User user = userRepository.createUser(
-                new CreateUserDTO(
-                        registerRequest.firstName(),
-                        registerRequest.lastName(),
-                        registerRequest.username(),
-                        registerRequest.phoneNumber(),
-                        registerRequest.email(),
-                        hashedPassword,
-                        registerRequest.pfp(),
-                        registerRequest.about()
-                )
-        );
-
-        return new UserResponse(
+    private AuthResponse createAuthResponse(User user) {
+        String token = jwtService.generateToken(user);
+        UserResponse userResponse = new UserResponse(
                 user.getId(),
                 user.getFirstName(),
                 user.getLastName(),
@@ -47,23 +33,54 @@ public class AuthService {
                 user.getRegistrationDate(),
                 user.getStatus()
         );
+
+        return new AuthResponse(
+                token,
+                "Bearer",
+                jwtService.getExpirationSeconds(),
+                userResponse
+        );
     }
 
-    public LoginResponse login(LoginRequest loginRequest) {
-        User user = userRepository.findUsersByEmail(loginRequest.email()).orElseThrow(() -> new UserNotFoundException("Could not find user with email: " + loginRequest.email()));
+    public AuthResponse register(RegisterRequest registerRequest) {
+        String hashedPassword = passwordEncoder.encode(registerRequest.password());
 
-        boolean passwordMatches = passwordEncoder.matches(loginRequest.password(), user.getPassword());
+        CreateUserDTO createUserDTO = new CreateUserDTO(
+                registerRequest.firstName(),
+                registerRequest.lastName(),
+                registerRequest.username(),
+                registerRequest.phoneNumber(),
+                registerRequest.email(),
+                registerRequest.password(),
+                registerRequest.pfp(),
+                registerRequest.about()
+        );
 
-        if (!passwordMatches) {
-            throw new DatabaseException("Incorrect password");
+        User user = userRepository.createUser(createUserDTO);
+
+        return createAuthResponse(user);
+    }
+
+    private ResponseStatusException invalidCredentials() {
+        return new ResponseStatusException(
+                HttpStatus.UNAUTHORIZED, "Invalid email or password"
+        );
+    }
+
+    public AuthResponse login(LoginRequest loginRequest) {
+        User user = userRepository.findUsersByEmail(loginRequest.email()).orElseThrow(() -> invalidCredentials());
+
+        if (!passwordEncoder.matches(loginRequest.password(), user.getPassword())) {
+            throw invalidCredentials();
         }
 
-        return new LoginResponse(
-                user.getId(),
-                user.getUsername(),
-                user.getEmail(),
-                user.getStatus()
-        );
+        if (!"ACTIVE".equalsIgnoreCase(user.getStatus())) {
+            throw new ResponseStatusException(
+                    HttpStatus.FORBIDDEN, "This account is inactive"
+            );
+        }
+
+        return createAuthResponse(user);
     }
 
 }
