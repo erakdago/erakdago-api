@@ -6,6 +6,7 @@ import org.erakdago.erakdagoapi.user.dto.UpdatePasswordDTO;
 import org.erakdago.erakdagoapi.user.dto.UpdateUserDTO;
 import org.erakdago.erakdagoapi.user.dto.UserResponse;
 import org.erakdago.erakdagoapi.user.service.UserService;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,6 +29,7 @@ public class UserController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public UserResponse create(@RequestBody CreateUserDTO createUserDTO) {
         return userService.createUser(createUserDTO);
     }
