@@ -5,6 +5,8 @@ import org.erakdago.erakdagoapi.destination.repository.RegionRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class RegionService {
@@ -14,5 +16,8 @@ public class RegionService {
     }
     public List<Region> getRegions() {
         return  regionRepository.findRegions();
+    }
+    public Optional<Region> getRegionById(UUID id) {
+        return regionRepository.findRegionById(id);
     }
 }

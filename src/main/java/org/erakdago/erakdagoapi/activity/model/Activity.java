@@ -16,7 +16,6 @@ import java.util.UUID;
 public class Activity {
 
     public enum ActivityDifficulty {
-
         EASY, MEDIUM, DIFFICULT
     }
 
