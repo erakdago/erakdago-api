@@ -2,8 +2,8 @@ package org.erakdago.erakdagoapi.config;
 
 import com.nimbusds.jose.jwk.source.ImmutableSecret;
 import io.github.cdimascio.dotenv.Dotenv;
-import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
 import org.springframework.security.oauth2.jwt.*;
 
@@ -11,7 +11,7 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import java.util.Base64;
 
-@Configurable
+@Configuration
 public class JwtConfig {
     private static final Dotenv DOTENV = Dotenv.configure().ignoreIfMissing().load();
 
