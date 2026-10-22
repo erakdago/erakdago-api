@@ -51,7 +51,7 @@ public class AuthService {
                 registerRequest.username(),
                 registerRequest.phoneNumber(),
                 registerRequest.email(),
-                registerRequest.password(),
+                hashedPassword,
                 registerRequest.pfp(),
                 registerRequest.about()
         );
